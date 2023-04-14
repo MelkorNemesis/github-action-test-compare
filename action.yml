@@ -36,13 +36,6 @@ runs:
     - name: Checkout branch
       uses: actions/checkout@v3
 
-    - name: Checkout target branch
-      uses: actions/checkout@v3
-      if: ${{ !env.ACT }}
-      with:
-        ref: ${{ github.event.pull_request.base.ref }}
-        path: ${{ inputs.targetFolder }}
-
     - name: List files
       shell: sh
       run: ls -la
@@ -54,6 +47,13 @@ runs:
           echo "Target folder ${{ inputs.targetFolder }} already exists."
           exit 1
         fi
+
+    - name: Checkout target branch
+      uses: actions/checkout@v3
+      if: ${{ !env.ACT }}
+      with:
+        ref: ${{ github.event.pull_request.base.ref }}
+        path: ${{ inputs.targetFolder }}
 
     - name: Copy tests
       shell: sh
