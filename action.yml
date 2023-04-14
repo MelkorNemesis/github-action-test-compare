@@ -43,6 +43,10 @@ runs:
         ref: ${{ github.event.pull_request.base.ref }}
         path: ${{ inputs.targetFolder }}
 
+    - name: List files
+      shell: sh
+      run: ls -la
+
     - name: Fail if target folder exists
       shell: sh
       run: |
