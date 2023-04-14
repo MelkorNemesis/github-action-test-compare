@@ -43,6 +43,14 @@ runs:
         ref: ${{ github.event.pull_request.base.ref }}
         path: ${{ inputs.targetFolder }}
 
+    - name: Fail if target folder exists
+      shell: sh
+      run: |
+        if [ -d "${{ inputs.targetFolder }}" ]; then
+          echo "Target folder ${{ inputs.targetFolder }} already exists."
+          exit 1
+        fi
+
     - name: Copy tests
       shell: sh
       run: cp -R ${{ inputs.tests }} ${{ inputs.targetFolder }}
